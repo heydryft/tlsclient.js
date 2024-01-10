@@ -19,7 +19,7 @@ Install with npm
 ### First run:
 
 ```javascript
-import { createTLSClient } from "./index.js";
+import { createTLSClient } from "@dryft/tlsclient";
 
 const axios = createTLSClient();
 let res = await axios.get("https://ipv4.icanhazip.com");
@@ -42,7 +42,7 @@ let res = await axios.get("https://ipv4.icanhazip.com");
  * - `timeout` - Request timeout.
  * - `defaultHeaders` - Default headers to use. Usually the browser default headers.
  * - `headerOrder` - The order of the headers.
- * @param {import("axios").CreateAxiosDefaults<any>} config The configuration.
+ * @param {TLSClientConfiguration} config The configuration.
  *
  * @returns {AxiosInstance} The TLS client.
  */
