@@ -1,6 +1,6 @@
 import fs from "fs";
 import axios from "axios";
-import { getTLSDependencyPath } from "@dryft/tlsclient";
+import { getTLSDependencyPath } from "./tlspath.js";
 
 function downloadFile(url, destination) {
   const file = fs.createWriteStream(destination);
