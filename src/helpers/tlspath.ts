@@ -1,4 +1,4 @@
-import { readFile } from "fs";
+import { readFileSync } from "fs";
 import os from "os";
 const arch = os.arch();
 const platform = os.platform();
@@ -18,18 +18,13 @@ if (platform === "win32") {
   filename = "tls-client-linux";
   extension = "so";
 
-  let release = await new Promise((resolve) => {
-    readFile("/etc/os-release", "utf8", (err, data) => {
-      if (err) throw err;
-      const lines = data.split("\n");
-      const releaseDetails = {};
-      lines.forEach((line, _) => {
-        // Split the line into an array of words delimited by '='
-        const words = line.split("=");
-        releaseDetails[words[0].trim().toLowerCase()] = words[1].trim();
-      });
-      resolve(releaseDetails);
-    });
+  let releaseDetails = readFileSync("/etc/os-release", "utf8");
+  const lines = releaseDetails.split("\n");
+  const release: any = {};
+  lines.forEach((line, _) => {
+    // Split the line into an array of words delimited by '='
+    const words = line.split("=");
+    release[words[0].trim().toLowerCase()] = words[1].trim();
   });
 
   if (release.id.toLowerCase().includes("ubuntu")) {

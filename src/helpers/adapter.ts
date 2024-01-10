@@ -1,7 +1,7 @@
 import workerpool from "workerpool";
 import http from "http";
 import { AxiosError } from "axios";
-import { getTLSDependencyPath } from "./tlspath.js";
+import { getTLSDependencyPath } from "./tlspath";
 
 let { TLS_LIB_PATH } = getTLSDependencyPath();
 
@@ -58,7 +58,7 @@ let DEFAULT_HEADER_ORDER = [
   "accept-language",
 ];
 
-function settle(resolve, reject, response) {
+function settle(resolve: any, reject: any, response: any) {
   const validateStatus = response.config.validateStatus;
   if (!response.status || !validateStatus || validateStatus(response.status)) {
     resolve(response);
@@ -77,7 +77,7 @@ function settle(resolve, reject, response) {
   }
 }
 
-export function createAdapter(_config) {
+export function createAdapter(_config: any) {
   if (_config?.tlsLibPath) {
     TLS_LIB_PATH = _config.tlsLibPath;
   }
@@ -88,7 +88,7 @@ export function createAdapter(_config) {
       },
     },
   });
-  return function (config) {
+  return function (config: any) {
     return new Promise(async (resolve, reject) => {
       const requestPayload = {
         tlsClientIdentifier: config.tlsClientIdentifier || DEFAULT_CLIENT_ID,
@@ -119,7 +119,7 @@ export function createAdapter(_config) {
       };
       let res = await pool.exec("request", [JSON.stringify(requestPayload)]);
       const resJSON = JSON.parse(res);
-      let resHeaders = {};
+      let resHeaders: any = {};
       Object.keys(resJSON.headers).forEach((key) => {
         resHeaders[key] = !isNaN(resJSON.headers[key][0])
           ? parseFloat(resJSON.headers[key][0])

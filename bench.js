@@ -1,5 +1,5 @@
 import Benchmarkify from "benchmarkify";
-import { createTLSClient } from "./index.js";
+import { createTLSClient } from "./src/index.js";
 
 const tlsclient = createTLSClient();
 import ffi from "ffi-napi";
