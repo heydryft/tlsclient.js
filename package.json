@@ -7,11 +7,37 @@
   "scripts": {
     "postinstall": "node ./scripts/postinstall.js"
   },
-  "name": "tlsclient.js",
+  "name": "@dryft/tlsclient",
   "version": "1.0.0",
   "module": "index.js",
   "type": "module",
   "peerDependencies": {
     "typescript": "^5.0.0"
-  }
+  },
+  "description": "An axios based wrapper for `bogdanfinn/tls-client` based on ffi-rs for unparalleled performance and usability.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heydryft/tlsclient.js.git"
+  },
+  "keywords": [
+    "tls",
+    "js",
+    "ts",
+    "javascript",
+    "typescript",
+    "browser",
+    "chrome",
+    "request"
+  ],
+  "author": "heydryft",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/heydryft/tlsclient.js/issues"
+  },
+  "homepage": "https://github.com/heydryft/tlsclient.js#readme"
 }
