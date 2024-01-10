@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "axios": "^1.6.5",
+    "ffi-rs": "^1.0.43",
+    "workerpool": "^9.0.4"
+  },
+  "scripts": {
+    "postinstall": "node ./scripts/postinstall.js"
+  },
+  "name": "tlsclient.js",
+  "version": "1.0.0",
+  "module": "index.js",
+  "type": "module",
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
