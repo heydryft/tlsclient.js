@@ -1,4 +1,4 @@
-import { createTLSClient } from "./src/index.ts";
+import { createTLSClient } from "./src";
 
 const tlsclient = createTLSClient({});
 tlsclient

@@ -81,13 +81,16 @@ export function createAdapter(_config: any) {
   if (_config?.tlsLibPath) {
     TLS_LIB_PATH = _config.tlsLibPath;
   }
-  const pool = workerpool.pool(`./lib/tls.js`, {
-    workerThreadOpts: {
-      env: {
-        TLS_LIB_PATH,
+  const pool = workerpool.pool(
+    require.resolve("@dryft/tlsclient/lib/helpers/tls.js"),
+    {
+      workerThreadOpts: {
+        env: {
+          TLS_LIB_PATH,
+        },
       },
-    },
-  });
+    }
+  );
   return function (config: any) {
     return new Promise(async (resolve, reject) => {
       const requestPayload = {
