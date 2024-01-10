@@ -1,5 +1,5 @@
-import { readFileSync } from "fs";
-import os from "os";
+const fs = require("fs");
+const os = require("os");
 const arch = os.arch();
 const platform = os.platform();
 
@@ -42,9 +42,11 @@ let _filename = `${filename}-${distribution}-v${version}.${extension}`;
 const url = `https://github.com/bogdanfinn/tls-client/releases/download/v1.7.2/${_filename}`;
 const destination = `${os.tmpdir()}/${_filename}`;
 
-export function getTLSDependencyPath() {
+function getTLSDependencyPath() {
   return {
     DOWNLOAD_PATH: url,
     TLS_LIB_PATH: destination,
   };
 }
+
+module.exports = { getTLSDependencyPath };
