@@ -5,6 +5,7 @@ import {
   DEFAULT_HEADERS,
   DEFAULT_HEADER_ORDER,
 } from "./helpers/adapter";
+import { getTLSDependencyPath } from "./helpers/tlspath";
 
 interface TLSClientConfiguration extends CreateAxiosDefaults<any> {
   proxy?: string | any;
@@ -51,4 +52,5 @@ export {
   DEFAULT_HEADER_ORDER,
   TLSClientConfiguration,
   createTLSClient,
+  getTLSDependencyPath,
 };
