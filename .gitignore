@@ -51,6 +51,7 @@ bower_components
 build/Release
 
 # Dependency directories
+yarn.lock
 lib/
 node_modules/
 jspm_packages/
