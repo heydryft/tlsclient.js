@@ -124,9 +124,9 @@ export function createAdapter(_config: any) {
       const resJSON = JSON.parse(res);
       let resHeaders: any = {};
       Object.keys(resJSON.headers).forEach((key) => {
-        resHeaders[key] = !isNaN(resJSON.headers[key][0])
-          ? parseFloat(resJSON.headers[key][0])
-          : resJSON.headers[key][0];
+        resHeaders[key] = resJSON.headers[key].length === 1
+            ? resJSON.headers[key][0]
+            : resJSON.headers[key];
       });
       var response = {
         data: resJSON.body,
