@@ -18,7 +18,7 @@ if (platform === "win32") {
   filename = "tls-client-linux";
   extension = "so";
 
-  let releaseDetails = readFileSync("/etc/os-release", "utf8");
+  let releaseDetails = fs.readFileSync("/etc/os-release", "utf8");
   const lines = releaseDetails.split("\n");
   const release = {};
   lines.forEach((line, _) => {
