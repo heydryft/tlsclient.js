@@ -27,7 +27,7 @@ if (platform === "win32") {
     release[words[0].trim().toLowerCase()] = words[1].trim();
   });
 
-  if (release.id.toLowerCase().includes("ubuntu")) {
+  if (release.id_like.toLowerCase().includes("ubuntu")) {
     distribution = "ubuntu-amd64";
   } else if (release.id.toLowerCase().includes("alpine")) {
     distribution = `alpine-amd64`;
