@@ -19,7 +19,7 @@ if (platform === "win32") {
   extension = "so";
 
   let releaseDetails = readFileSync("/etc/os-release", "utf8");
-  const lines = releaseDetails.split("\n");
+  const lines = releaseDetails.split("\n").filter(_ => _.includes('='));
   const release: any = {};
   lines.forEach((line, _) => {
     // Split the line into an array of words delimited by '='
