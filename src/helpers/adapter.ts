@@ -123,7 +123,7 @@ export function createAdapter(_config: any) {
       let res = await pool.exec("request", [JSON.stringify(requestPayload)]);
       const resJSON = JSON.parse(res);
       let resHeaders: any = {};
-      Object.keys(resJSON.headers).forEach((key) => {
+      Object.keys(resJSON?.headers ?? {}).forEach((key) => {
         resHeaders[key] = resJSON.headers[key].length === 1
             ? resJSON.headers[key][0]
             : resJSON.headers[key];
