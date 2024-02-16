@@ -95,10 +95,8 @@ export function createAdapter(_config: any) {
     return new Promise(async (resolve, reject) => {
       const requestPayload = {
         tlsClientIdentifier: config.tlsClientIdentifier || DEFAULT_CLIENT_ID,
-        followRedirects: config.followRedirects || false,
+        followRedirects: config.followRedirects || true,
         insecureSkipVerify: config.insecureSkipVerify || true,
-        withoutCookieJar: true,
-        withDefaultCookieJar: false,
         isByteRequest: false,
         catchPanics: false,
         withDebug: false,
@@ -119,6 +117,7 @@ export function createAdapter(_config: any) {
         requestUrl: config.url,
         requestMethod: config.method.toUpperCase(),
         requestBody: config.data,
+        requestCookies: config.cookiejar || []
       };
       let res = await pool.exec("request", [JSON.stringify(requestPayload)]);
       const resJSON = JSON.parse(res);
