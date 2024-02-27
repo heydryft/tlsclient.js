@@ -135,7 +135,7 @@ export function createAdapter(_config: any) {
         config,
         request: {
           responseURL: encodeURI(
-            resJSON.headers && resJSON.headers.Location
+            resJSON.status.toString().startsWith('3') && resJSON.headers && resJSON.headers.Location
               ? resJSON.headers.Location[0]
               : resJSON.target
           ),
