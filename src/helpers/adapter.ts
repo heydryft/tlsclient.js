@@ -97,7 +97,7 @@ export function createAdapter(_config: any) {
         requestUrl: config.url,
         requestMethod: config.method.toUpperCase(),
         requestBody: config.data,
-        requestCookies: config.cookiejar || []
+        requestCookies: await config.cookiejar?.serialize()?.then(_ => _.cookies.map(_ => globalThis.Object.fromEntries(globalThis.Object.entries(_).map(_ => globalThis.Object.is(_.at(0), 'key') ? ['name', _.at(1)] : _)))) ?? []
       };
       let res = await pool.exec("request", [JSON.stringify(requestPayload)]);
       const resJSON = JSON.parse(res);
