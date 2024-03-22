@@ -1,7 +1,7 @@
 import workerpool from "workerpool";
 import http from "http";
 import { AxiosError } from "axios";
-import { getTLSDependencyPath } from "./tlspath";
+import { getTLSDependencyPath } from "./tlspath.mjs";
 
 let { TLS_LIB_PATH } = getTLSDependencyPath();
 
@@ -58,12 +58,11 @@ let DEFAULT_HEADER_ORDER = [
   "accept-language",
 ];
 
-export function createAdapter(_config: any) {
+export function createAdapter(_config) {
   if (_config?.tlsLibPath) {
     TLS_LIB_PATH = _config.tlsLibPath;
   }
-  const pool = workerpool.pool(
-    require.resolve("@dryft/tlsclient/lib/helpers/tls.js"),
+  const pool = workerpool.pool(import.meta.dirname + "/tls.mjs",
     {
       workerThreadOpts: {
         env: {
@@ -72,7 +71,7 @@ export function createAdapter(_config: any) {
       },
     }
   );
-  return async function (config: any) {
+  return async function (config) {
       const requestPayload = {
         tlsClientIdentifier: config.tlsClientIdentifier || DEFAULT_CLIENT_ID,
         followRedirects: config.followRedirects || true,
@@ -101,7 +100,7 @@ export function createAdapter(_config: any) {
       };
       let res = await pool.exec("request", [JSON.stringify(requestPayload)]);
       const resJSON = JSON.parse(res);
-      let resHeaders: any = {};
+      let resHeaders = {};
       Object.keys(resJSON?.headers ?? {}).forEach((key) => {
         resHeaders[key] = resJSON.headers[key].length === 1
             ? resJSON.headers[key][0]
