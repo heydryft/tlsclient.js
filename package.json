@@ -5,9 +5,7 @@
     "workerpool": "^9.0.4"
   },
   "scripts": {
-    "build": "tsc",
-    "prepare": "npm run build",
-    "postinstall": "node ./scripts/postinstall.js"
+    "postinstall": "node postinstall.mjs"
   },
   "name": "@dryft/tlsclient",
   "version": "1.0.8",
@@ -15,8 +13,7 @@
     "typescript": "^5.0.0"
   },
   "description": "An axios based wrapper for `bogdanfinn/tls-client` based on ffi-rs for unparalleled performance and usability.",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "index.mjs",
   "directories": {
     "lib": "lib"
   },

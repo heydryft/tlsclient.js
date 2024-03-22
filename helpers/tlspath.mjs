@@ -19,15 +19,15 @@ if (platform === "win32") {
   extension = "so";
 
   let releaseDetails = readFileSync("/etc/os-release", "utf8");
-  const lines = releaseDetails.split("\n");
-  const release: any = {};
+  const lines = releaseDetails.split("\n").slice(0, -1);
+  const release = {};
   lines.forEach((line, _) => {
     // Split the line into an array of words delimited by '='
     const words = line.split("=");
     release[words[0].trim().toLowerCase()] = words[1].trim();
   });
 
-  if (release.id.toLowerCase().includes("ubuntu")) {
+  if (release.id.toLowerCase().includes("ubuntu") || release.id_like.toLowerCase().includes("ubuntu")) {
     distribution = "ubuntu-amd64";
   } else if (release.id.toLowerCase().includes("alpine")) {
     distribution = `alpine-amd64`;

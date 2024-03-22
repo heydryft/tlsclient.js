@@ -1,7 +1,8 @@
 import workerpool from "workerpool";
 import http from "http";
 import { AxiosError } from "axios";
-import { getTLSDependencyPath } from "./tlspath";
+import { getTLSDependencyPath } from "./tlspath.mjs";
+import path from 'path'
 
 let { TLS_LIB_PATH } = getTLSDependencyPath();
 
@@ -58,31 +59,11 @@ let DEFAULT_HEADER_ORDER = [
   "accept-language",
 ];
 
-function settle(resolve: any, reject: any, response: any) {
-  const validateStatus = response.config.validateStatus;
-  if (!response.status || !validateStatus || validateStatus(response.status)) {
-    resolve(response);
-  } else {
-    reject(
-      new AxiosError(
-        "Request failed with status code " + response.status,
-        [AxiosError.ERR_BAD_REQUEST, AxiosError.ERR_BAD_RESPONSE][
-          Math.floor(response.status / 100) - 4
-        ],
-        response.config,
-        response.request,
-        response
-      )
-    );
-  }
-}
-
-export function createAdapter(_config: any) {
+export function createAdapter(_config) {
   if (_config?.tlsLibPath) {
     TLS_LIB_PATH = _config.tlsLibPath;
   }
-  const pool = workerpool.pool(
-    require.resolve("@dryft/tlsclient/lib/helpers/tls.js"),
+  const pool = workerpool.pool(path.join(import.meta.dirname, 'tls.mjs'),
     {
       workerThreadOpts: {
         env: {
@@ -91,14 +72,11 @@ export function createAdapter(_config: any) {
       },
     }
   );
-  return function (config: any) {
-    return new Promise(async (resolve, reject) => {
+  return async function (config) {
       const requestPayload = {
         tlsClientIdentifier: config.tlsClientIdentifier || DEFAULT_CLIENT_ID,
-        followRedirects: config.followRedirects || false,
+        followRedirects: config.followRedirects || true,
         insecureSkipVerify: config.insecureSkipVerify || true,
-        withoutCookieJar: true,
-        withDefaultCookieJar: false,
         isByteRequest: false,
         catchPanics: false,
         withDebug: false,
@@ -119,11 +97,12 @@ export function createAdapter(_config: any) {
         requestUrl: config.url,
         requestMethod: config.method.toUpperCase(),
         requestBody: config.data,
+        requestCookies: await config.cookiejar?.serialize()?.then(_ => _.cookies.map(_ => globalThis.Object.fromEntries(globalThis.Object.entries(_).map(_ => globalThis.Object.is(_.at(0), 'key') ? ['name', _.at(1)] : _)))) ?? []
       };
       let res = await pool.exec("request", [JSON.stringify(requestPayload)]);
       const resJSON = JSON.parse(res);
-      let resHeaders: any = {};
-      Object.keys(resJSON.headers).forEach((key) => {
+      let resHeaders = {};
+      Object.keys(resJSON?.headers ?? {}).forEach((key) => {
         resHeaders[key] = resJSON.headers[key].length === 1
             ? resJSON.headers[key][0]
             : resJSON.headers[key];
@@ -131,20 +110,28 @@ export function createAdapter(_config: any) {
       var response = {
         data: resJSON.body,
         status: resJSON.status,
-        statusText: http.STATUS_CODES[resJSON.status],
+        statusText: http.STATUS_CODES[resJSON.status] ?? '',
         headers: resHeaders,
         config,
         request: {
           responseURL: encodeURI(
-            resJSON.headers && resJSON.headers.Location
+            resJSON.status.toString().startsWith('3') && resJSON.headers && resJSON.headers.Location
               ? resJSON.headers.Location[0]
               : resJSON.target
           ),
         },
       };
-
-      settle(resolve, reject, response);
-    });
+      const validateStatus = response.config.validateStatus;
+      if (!response.status || !validateStatus || validateStatus(response.status)) return response
+      else throw new AxiosError(
+        "Request failed with status code " + response.status,
+        [AxiosError.ERR_BAD_REQUEST, AxiosError.ERR_BAD_RESPONSE][
+          Math.floor(response.status / 100) - 4
+        ],
+        response.config,
+        response.request,
+        response
+      )    
   };
 }
 
