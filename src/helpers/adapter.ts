@@ -58,25 +58,6 @@ let DEFAULT_HEADER_ORDER = [
   "accept-language",
 ];
 
-function settle(resolve: any, reject: any, response: any) {
-  const validateStatus = response.config.validateStatus;
-  if (!response.status || !validateStatus || validateStatus(response.status)) {
-    resolve(response);
-  } else {
-    reject(
-      new AxiosError(
-        "Request failed with status code " + response.status,
-        [AxiosError.ERR_BAD_REQUEST, AxiosError.ERR_BAD_RESPONSE][
-          Math.floor(response.status / 100) - 4
-        ],
-        response.config,
-        response.request,
-        response
-      )
-    );
-  }
-}
-
 export function createAdapter(_config: any) {
   if (_config?.tlsLibPath) {
     TLS_LIB_PATH = _config.tlsLibPath;
@@ -91,8 +72,7 @@ export function createAdapter(_config: any) {
       },
     }
   );
-  return function (config: any) {
-    return new Promise(async (resolve, reject) => {
+  return async function (config: any) {
       const requestPayload = {
         tlsClientIdentifier: config.tlsClientIdentifier || DEFAULT_CLIENT_ID,
         followRedirects: config.followRedirects || true,
@@ -141,9 +121,17 @@ export function createAdapter(_config: any) {
           ),
         },
       };
-
-      settle(resolve, reject, response);
-    });
+      const validateStatus = response.config.validateStatus;
+      if (!response.status || !validateStatus || validateStatus(response.status)) return response
+      else throw new AxiosError(
+        "Request failed with status code " + response.status,
+        [AxiosError.ERR_BAD_REQUEST, AxiosError.ERR_BAD_RESPONSE][
+          Math.floor(response.status / 100) - 4
+        ],
+        response.config,
+        response.request,
+        response
+      )    
   };
 }
 
