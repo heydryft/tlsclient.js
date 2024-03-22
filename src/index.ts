@@ -18,6 +18,7 @@ interface TLSClientConfiguration extends CreateAxiosDefaults<any> {
   timeout?: number;
   defaultHeaders?: any;
   headerOrder?: string[];
+  requestCookies?: string[];
 }
 
 /**
