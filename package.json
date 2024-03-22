@@ -5,7 +5,7 @@
     "workerpool": "^9.0.4"
   },
   "scripts": {
-    "postinstall": "node ./postinstall.mjs"
+    "postinstall": "node ./lib/postinstall.mjs"
   },
   "name": "@dryft/tlsclient",
   "version": "1.0.8",
