@@ -110,7 +110,7 @@ export function createAdapter(_config: any) {
       var response = {
         data: resJSON.body,
         status: resJSON.status,
-        statusText: http.STATUS_CODES[resJSON.status],
+        statusText: http.STATUS_CODES[resJSON.status] ?? '',
         headers: resHeaders,
         config,
         request: {
