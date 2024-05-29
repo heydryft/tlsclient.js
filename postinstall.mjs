@@ -1,6 +1,6 @@
-const fs = require("fs");
-const axios = require("axios");
-const { getTLSDependencyPath } = require("./tlspath.js");
+import fs from "fs";
+import axios from "axios";
+import { getTLSDependencyPath } from "./helpers/tlspath.mjs";
 
 function downloadFile(url, destination) {
   const file = fs.createWriteStream(destination);
