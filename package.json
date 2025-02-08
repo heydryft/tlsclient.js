@@ -20,7 +20,7 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/heydryft/tlsclient.js.git"
+    "url": "git+https://github.com/chaowenguo/tlsclient.git"
   },
   "keywords": [
     "tls",
@@ -32,10 +32,10 @@
     "chrome",
     "request"
   ],
-  "author": "heydryft",
+  "author": "chaowenguo",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/heydryft/tlsclient.js/issues"
+    "url": "https://github.com/chaowenguo/tlsclient/issues"
   },
-  "homepage": "https://github.com/heydryft/tlsclient.js#readme"
+  "homepage": "https://github.com/chaowenguo/tlsclient#readme"
 }
