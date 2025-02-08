@@ -7,8 +7,8 @@
   "scripts": {
     "postinstall": "node postinstall.mjs"
   },
-  "name": "@dryft/tlsclient",
-  "version": "1.0.8",
+  "name": "@chaowenguo/tlsclient",
+  "version": "1.0.0",
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
