@@ -5,25 +5,22 @@
     "workerpool": "^9.0.4"
   },
   "scripts": {
-    "build": "tsc",
-    "prepare": "npm run build",
-    "postinstall": "node ./scripts/postinstall.js"
+    "postinstall": "node postinstall.mjs"
   },
-  "name": "@dryft/tlsclient",
-  "version": "1.0.8",
+  "name": "@chaowenguo/tlsclient",
+  "version": "1.0.0",
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
   "description": "An axios based wrapper for `bogdanfinn/tls-client` based on ffi-rs for unparalleled performance and usability.",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "index.mjs",
   "directories": {
     "lib": "lib"
   },
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/heydryft/tlsclient.js.git"
+    "url": "git+https://github.com/chaowenguo/tlsclient.git"
   },
   "keywords": [
     "tls",
@@ -35,10 +32,10 @@
     "chrome",
     "request"
   ],
-  "author": "heydryft",
+  "author": "chaowenguo",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/heydryft/tlsclient.js/issues"
+    "url": "https://github.com/chaowenguo/tlsclient/issues"
   },
-  "homepage": "https://github.com/heydryft/tlsclient.js#readme"
+  "homepage": "https://github.com/chaowenguo/tlsclient#readme"
 }

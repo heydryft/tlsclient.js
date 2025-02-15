@@ -11,7 +11,7 @@ An axios based wrapper for `bogdanfinn/tls-client` based on ffi-rs for unparalle
 Install with npm
 
 ```bash
-  npm i @dryft/tlsclient
+  npm i @chaowenguo/tlsclient
 ```
 
 ## Usage

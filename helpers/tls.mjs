@@ -3,11 +3,11 @@ import { load, open } from "ffi-rs";
 
 open({
   library: "tls",
-  path: process.env.TLS_LIB_PATH as any,
+  path: process.env.TLS_LIB_PATH,
 });
 
 let instance = {
-  request: (payload: string) => {
+  request: (payload) => {
     let res = load({
       library: "tls",
       funcName: "request",
@@ -17,7 +17,7 @@ let instance = {
     });
     return res;
   },
-  getCookiesFromSession: (payload: string) => {
+  getCookiesFromSession: (payload) => {
     let res = load({
       library: "tls",
       funcName: "getCookiesFromSession",
@@ -27,7 +27,7 @@ let instance = {
     });
     return res;
   },
-  addCookiesToSession: (payload: string) => {
+  addCookiesToSession: (payload) => {
     let res = load({
       library: "tls",
       funcName: "addCookiesToSession",
@@ -37,7 +37,7 @@ let instance = {
     });
     return res;
   },
-  freeMemory: (payload: string) => {
+  freeMemory: (payload) => {
     let res = load({
       library: "tls",
       funcName: "freeMemory",
@@ -57,7 +57,7 @@ let instance = {
     });
     return res;
   },
-  destroySession: (payload: string) => {
+  destroySession: (payload) => {
     let res = load({
       library: "tls",
       funcName: "destroySession",
