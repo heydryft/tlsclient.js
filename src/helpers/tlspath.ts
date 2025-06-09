@@ -1,4 +1,4 @@
-import { readFileSync } from "fs";
+import fs from "fs";
 import os from "os";
 const arch = os.arch();
 const platform = os.platform();
@@ -18,12 +18,15 @@ if (platform === "win32") {
   filename = "tls-client-linux";
   extension = "so";
 
-  let releaseDetails = readFileSync("/etc/os-release", "utf8");
+  let releaseDetails = fs.readFileSync("/etc/os-release", "utf8");
   const lines = releaseDetails.split("\n");
   const release: any = {};
   lines.forEach((line, _) => {
     // Split the line into an array of words delimited by '='
     const words = line.split("=");
+    if (words.length !== 2) {
+      return;
+    }
     release[words[0].trim().toLowerCase()] = words[1].trim();
   });
 

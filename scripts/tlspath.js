@@ -24,6 +24,9 @@ if (platform === "win32") {
   lines.forEach((line, _) => {
     // Split the line into an array of words delimited by '='
     const words = line.split("=");
+    if (words.length !== 2) {
+      return;
+    }
     release[words[0].trim().toLowerCase()] = words[1].trim();
   });
 
