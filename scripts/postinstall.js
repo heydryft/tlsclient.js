@@ -4,6 +4,11 @@ const { getTLSDependencyPath } = require("./tlspath.js");
 
 function downloadFile(url, destination) {
   const file = fs.createWriteStream(destination);
+
+  console.log("Downloading tls dependencies...");
+  console.log("> URL: ", url);
+  console.log("> Destination: ", destination);
+
   axios({
     url,
     method: "GET",
